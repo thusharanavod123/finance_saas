@@ -14,6 +14,10 @@ const navigation = [
 
 export function DashboardPage() {
   const { user } = useAuth();
+  const previewEmail =
+    import.meta.env.DEV && import.meta.env.VITE_BYPASS_AUTH === 'true'
+      ? 'preview@financeflow.local'
+      : user?.email;
   return (
     <div className="flex min-h-screen">
       <aside className="flex w-64 flex-col bg-slate-950 p-6 text-white">
@@ -32,7 +36,7 @@ export function DashboardPage() {
           ))}
         </nav>
         <div className="mt-auto border-t border-slate-800 pt-5">
-          <p className="truncate text-xs text-slate-400">{user?.email}</p>
+          <p className="truncate text-xs text-slate-400">{previewEmail}</p>
           <button
             onClick={() => void supabase.auth.signOut()}
             className="mt-3 text-sm font-medium text-slate-300 hover:text-white"
